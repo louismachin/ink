@@ -89,8 +89,8 @@ class Leaf
     end
 
     def symbol
-        return '🌳' if self.is_tree?
-        return '🌿' if self.is_leaf? # 🌿 🍂
+        return '🌳&#xFE0E;' if self.is_tree?
+        return '🌿&#xFE0E;' if self.is_leaf? # 🌿 🍂
         return ''
     end
 
