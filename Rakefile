@@ -1,10 +1,13 @@
-require './models/leaf.rb'
-require './models/branch.rb'
-require './models/tree.rb'
-
 task :test do
-    Dir['./forest/*/*.tree'].each do |filepath|
-        tree = Tree.new(filepath)
-        puts tree.debug
-    end
+    require './models/leaf.rb'
+    require './models/branch.rb'
+    require './models/tree.rb'
+    require './models/forest.rb'
+    forest = Forest.new
+    puts forest.debug
+end
+
+task :run do
+    require './server.rb'
+    Sinatra::Application.run!
 end

@@ -1,0 +1,7 @@
+<% if trees.any? %>
+    <ul>
+        <% trees.each { |tree| %>
+        <%= erb :_branch, locals: { branch: tree } %>
+        <% } %>
+    </ul>
+<% end %>

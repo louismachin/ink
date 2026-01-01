@@ -1,0 +1,7 @@
+<% if leaves.any? %>
+    <ul>
+        <% leaves.each { |leaf| %>
+        <%= erb :_leaf, locals: { leaf: leaf } %>
+        <% } %>
+    </ul>
+<% end %>

@@ -1,0 +1,7 @@
+<% if branches.any? %>
+    <ul>
+        <% branches.each { |branch| %>
+        <%= erb :_branch, locals: { branch: branch } %>
+        <% } %>
+    </ul>
+<% end %>

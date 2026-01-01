@@ -1,4 +1,6 @@
 class Branch < Leaf
+    attr_reader :branches, :leaves
+
     def initialize(filepath)
         super
         @dir = File.dirname(filepath)
