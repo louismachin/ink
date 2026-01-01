@@ -5,6 +5,7 @@
         <%= erb :_trees, locals: { trees: $forest.trees } %>
         <%= erb :_branches, locals: { branches: $forest.branches } %>
         <%= erb :_leaves, locals: { leaves: $forest.leaves } %>
+        <a onclick="hideAll(true)">Collapse</a> &bull; <a onclick="hideAll()">Expand</a>
     </body>
 
     <script>
@@ -12,6 +13,16 @@
         for (let ix = 0; ix < toggles.length; ix++) {
             toggles[ix].onclick = (e) => {
                 e.target.parentElement.classList.toggle('hidden')
+            }
+        }
+
+        let hideAll = (hide = false) => {
+            for (let ix = 0; ix < toggles.length; ix++) {
+                 if (hide) {
+                    toggles[ix].parentElement.classList.add('hidden')
+                } else {
+                    toggles[ix].parentElement.classList.remove('hidden')
+                }
             }
         }
     </script>
