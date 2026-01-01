@@ -14,7 +14,7 @@ get '/' do
     erb :forest
 end
 
-get '/*.:ext' do
+get '/forest/*.:ext' do
     begin
         return pass unless ['leaf', 'branch', 'tree'].include?(params['ext'])
         # Get path as parts

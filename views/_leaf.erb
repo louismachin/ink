@@ -1,1 +1,7 @@
-<li><%= leaf.title %></li>
+<% if leaf.is_leaf? %>
+    <li>
+        <a href="<%= leaf.filepath %>">
+            <b class="symbol"><%= leaf.symbol %>&#xFE0E;</b> <%= leaf.title %>
+        </a>
+    </li>
+<% end %>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-<body>
-    <%= erb :_leaves, locals: { leaves: $forest.leaves } %>
-    <%= erb :_branches, locals: { branches: $forest.branches } %>
-    <%= erb :_trees, locals: { trees: $forest.trees } %>
-</body>
+    <%= erb :_head %>
+    <body>
+        <%= erb :_leaves, locals: { leaves: $forest.leaves } %>
+        <%= erb :_branches, locals: { branches: $forest.branches } %>
+        <%= erb :_trees, locals: { trees: $forest.trees } %>
+    </body>
 </html

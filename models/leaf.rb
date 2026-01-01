@@ -4,7 +4,7 @@ ARRAY_ATTRS = ['tags']
 TAG_INDICATOR = '#'
 
 class Leaf
-    attr_reader :id, :filename
+    attr_reader :id, :filepath
     attr_reader :attributes
     attr_reader :body
 
@@ -74,6 +74,24 @@ class Leaf
         return '' unless value
         return value.join(' ') if ARRAY_ATTRS.include?(key)
         return value
+    end
+
+    def is_leaf?
+        return @filepath.end_with?('.leaf')
+    end
+
+    def is_branch?
+        return @filepath.end_with?('.branch')
+    end
+
+    def is_tree?
+        return @filepath.end_with?('.tree')
+    end
+
+    def symbol
+        return '🌳' if self.is_tree?
+        return '🌿' if self.is_leaf? # 🌿 🍂
+        return ''
     end
 
     def title
