@@ -15,31 +15,27 @@ get '/' do
 end
 
 get '/*.:ext' do
-    return erb :not_found unless ['leaf', 'branch', 'tree'].include?(params['ext'])
-    
-    path = params['splat'].first + '.' + params['ext']
-    parts = path.split('/')
-
-    tree = parts[0]
-    branches = parts.length > 2 ? parts[1..-2] : []
-    leaf = parts[-1] if parts[-1].end_with?('.leaf', '.branch', '.tree')
-
-    traversal = []
-    traversal << tree + '.tree' unless tree == leaf
-    branches.each { |branch| traversal << branch + '.branch' }
-    traversal << leaf if leaf
-
-    iota = $forest
-
-    traversal[0..-2].each do |id|
-        iota = iota.find(id)
-        return erb :not_found unless iota
+    begin
+        return erb :not_found unless ['leaf', 'branch', 'tree'].include?(params['ext'])
+        # Get path as parts
+        path = params['splat'].first + '.' + params['ext']
+        parts = path.split('/')
+        # Categorize parts
+        tree, leaf = parts[0], parts[-1]
+        branches = parts.length > 2 ? parts[1..-2] : []
+        # Build traversal path of IDs
+        traversal = []
+        traversal << tree + '.tree' unless tree == leaf
+        branches.each { |branch| traversal << branch + '.branch' }
+        traversal << leaf if leaf
+        # Traverse and cast last part as a leaf
+        iota = $forest
+        traversal[0..-2].each { |id| iota = iota.find(id) }
+        @leaf = iota.find_leaf(traversal[-1])
+        erb :show
+    rescue
+        erb :not_found
     end
-
-    @leaf = iota.find_leaf(traversal[-1])
-    return erb :not_found unless @leaf
-
-    erb :show
 end
 
 configure do
