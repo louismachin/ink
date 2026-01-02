@@ -21,6 +21,6 @@ configure do
     set :port, PORT
     set :public_folder, File.join(APP_ROOT, 'public')
     set :views, File.join(APP_ROOT, 'views')
-#   set :environment, :production
-#   disable :protection
+    set :environment, :production
+    disable :protection
 end
