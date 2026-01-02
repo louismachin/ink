@@ -2,11 +2,18 @@ get '/' do
     erb :forest
 end
 
+get '/reload' do
+    $forest.reload
+    redirect '/'
+end
+
 get '/*/edit' do
     begin
         # Get path as parts
         @path = params['splat'].first
+        @path = '' if @path == 'forest'
         parts = @path.split('/')
+        parts = [''] if parts == []
         edit = [
             parts.last.end_with?('.leaf'),
             parts.last.end_with?('.branch'),
@@ -41,6 +48,7 @@ post '/*/edit' do
     request.body.rewind
     data = request.body.read.split("\n")
     path = params['splat'].first.split("/")
+    path = [''] if path == ['forest']
     edit = [
         path.last.end_with?('.leaf'),
         path.last.end_with?('.branch'),

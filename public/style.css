@@ -42,7 +42,7 @@ a:hover, .toggle:hover {
 
 li::before {
     content: "├─ ";
-    color: #999;
+    color: #333;
 }
 
 li:last-child::before {

@@ -14,7 +14,7 @@
         let submitForm = (e) => {
             e.preventDefault()
             const raw = document.getElementById('raw').value
-            fetch('/<%= path %>/edit', {
+            fetch('/<%= path == '' ? 'forest' : path %>/edit', {
                 method: 'POST',
                 headers: {'Content-Type': 'text/plain'}, 
                 body: raw,

@@ -4,11 +4,13 @@
     <body>
         <%= erb :_trees, locals: { trees: $forest.trees } %>
         <%= erb :_leaves, locals: { leaves: $forest.leaves } %>
-        <%= erb :_branches, locals: { branches: $forest.branches, uri: './forest' } %>
+        <%= erb :_branches, locals: { branches: $forest.branches, uri: './forest/forest' } %>
         <div class="buttons">
             <a onclick="hideAll(true)">Collapse</a>
             &bull;
             <a onclick="hideAll()">Expand</a>
+            &bull;
+            <a onclick="reload()">Reload</a>
         </div>
     </body>
 
@@ -29,5 +31,7 @@
                 }
             }
         }
+
+        let reload = () => window.location = '/reload'
     </script>
 </html

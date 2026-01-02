@@ -8,7 +8,8 @@ class Leaf
     attr_reader :attributes
     attr_reader :body, :raw
 
-    def initialize(filepath)
+    def initialize(filepath = nil)
+        return unless filepath
         @filepath = filepath
         @id = File.basename(filepath)
         begin
@@ -69,7 +70,7 @@ class Leaf
         else
             @attributes[key] = value
         end
-        save_to_file if and_save
+    #   save_to_file if and_save
     end
 
     def get_attr(key) # => returns string

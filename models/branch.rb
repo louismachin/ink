@@ -4,6 +4,10 @@ class Branch < Leaf
     def initialize(filepath)
         super
         @dir = File.dirname(filepath)
+        reload
+    end
+
+    def reload
         @branches = []
         @leaves = []
         load_branches
