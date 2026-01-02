@@ -7,5 +7,5 @@
         <% end %>
     </p>
     <%= erb :_leaves, locals: { leaves: branch.leaves } %>
-    <%= erb :_branches, locals: { branches: branch.branches } %>
+    <%= erb :_branches, locals: { branches: branch.branches, uri: branch.uri } %>
 </li>

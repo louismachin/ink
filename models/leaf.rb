@@ -6,7 +6,7 @@ TAG_INDICATOR = '#'
 class Leaf
     attr_reader :id, :filepath
     attr_reader :attributes
-    attr_reader :body
+    attr_reader :body, :raw
 
     def initialize(filepath)
         @filepath = filepath
@@ -57,6 +57,10 @@ class Leaf
         output << ATTR_END
         output += @body
         File.write(filepath, output.join("\n"))
+    end
+
+    def uri
+        return @filepath.sub('/forest', '')
     end
 
     def set_attr(key, value, and_save = true)

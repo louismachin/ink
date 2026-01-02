@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <%= erb :_head %>
+    <body>
+        <div class="buttons">
+            <% path = defined?(@path) ? @path : '/' %>
+            <p><%= path %></p>
+            <button onclick="submitForm(event)">Save</button>
+        </div>
+        <% raw = defined?(@raw) ? @raw.join("\n") : '' %>
+        <textarea id="raw" rows="10"><%= raw %></textarea>
+    </body>
+    <script>
+        let submitForm = (e) => {
+            e.preventDefault()
+            const raw = document.getElementById('raw').value
+            fetch('/<%= path %>/edit', {
+                method: 'POST',
+                headers: {'Content-Type': 'text/plain'}, 
+                body: raw,
+            }).then(res => {
+                window.location.reload()
+            })
+        }
+    </script>
+</html>

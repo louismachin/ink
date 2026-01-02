@@ -2,6 +2,11 @@
 <html>
     <%= erb :_head %>
     <body>
+        <div class="buttons">
+            <a href="/">Back</a>
+            &bull;
+            <a href="/<%= @leaf.uri %>/edit">Edit</a>
+        </div>
         <pre><%= @leaf.body.join('<br>') %></pre>
     </body>
 </html

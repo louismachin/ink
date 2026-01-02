@@ -8,6 +8,15 @@ class Forest < Tree
         load_trees
     end
 
+    def reload
+        @trees = []
+        @branches = []
+        @leaves = []
+        load_trees
+        load_branches
+        load_leaves
+    end
+
     def load_trees
         Dir[@dir + '/*/*.tree'].each do |filepath|
             @trees << Tree.new(filepath)

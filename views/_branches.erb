@@ -1,7 +1,11 @@
-<% if branches.any? %>
-    <ul>
-        <% branches.each { |branch| %>
+<ul>
+    <% branches.each { |branch| %>
         <%= erb :_branch, locals: { branch: branch } %>
-        <% } %>
-    </ul>
-<% end %>
+    <% } %>
+    <li>
+        <% new_uri = uri.split('/')[0..-2].join('/') + '/edit' %>
+        <a href="<%= new_uri %>">
+            <b class="symbol">+</b>New
+        </a>
+    </li>
+</ul>

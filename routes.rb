@@ -1,0 +1,97 @@
+get '/' do
+    erb :forest
+end
+
+get '/*/edit' do
+    begin
+        # Get path as parts
+        @path = params['splat'].first
+        parts = @path.split('/')
+        edit = [
+            parts.last.end_with?('.leaf'),
+            parts.last.end_with?('.branch'),
+            parts.last.end_with?('.tree'),
+        ].any?
+        if edit
+            # Categorize parts
+            tree, leaf = parts[0], parts[-1]
+            branches = parts.length > 2 ? parts[1..-2] : []
+            # Build traversal path of IDs
+            traversal = []
+            traversal << tree + '.tree' unless tree == leaf
+            branches.each { |branch| traversal << branch + '.branch' }
+            traversal << leaf if leaf
+            # Traverse and cast last part as a leaf
+            iota = $forest
+            traversal[0..-2].each { |id| iota = iota.find(id) }
+            leaf = iota.find_leaf(traversal[-1])
+            @raw = leaf.raw
+        else
+            @raw = ['---', 'title: untitled', '---', ]
+        end
+        erb :edit
+    rescue => error
+        puts error.message
+        puts error.backtrace
+        return halt(404)
+    end
+end
+
+post '/*/edit' do
+    request.body.rewind
+    data = request.body.read.split("\n")
+    path = params['splat'].first.split("/")
+    edit = [
+        path.last.end_with?('.leaf'),
+        path.last.end_with?('.branch'),
+        path.last.end_with?('.tree'),
+    ].any?
+
+    if edit
+        filepath = File.join('forest', path)
+    else
+        filename = 'untitled'
+        if data.first == ATTR_START
+            data[1..-1].each do |line|
+                key, value = line.split(': ', 2)
+                filename = value if key == 'key'
+                break if line == ATTR_END
+            end
+        end
+        filepath = File.join('forest', path, filename + '.leaf')
+    end
+
+    puts "Path: #{filepath}"
+    puts "Data: #{data.inspect}"
+
+    File.write(filepath, data.join("\n"))
+
+    $forest.reload
+
+    content_type :json
+    { success: true }.to_json
+end
+
+get '/*.:ext' do
+    begin
+        return pass unless ['leaf', 'branch', 'tree'].include?(params['ext'])
+        # Get path as parts
+        path = params['splat'].first + '.' + params['ext']
+        parts = path.split('/')
+        # Categorize parts
+        tree, leaf = parts[0], parts[-1]
+        branches = parts.length > 2 ? parts[1..-2] : []
+        # Build traversal path of IDs
+        traversal = []
+        traversal << tree + '.tree' unless tree == leaf
+        branches.each { |branch| traversal << branch + '.branch' }
+        traversal << leaf if leaf
+        # Traverse and cast last part as a leaf
+        iota = $forest
+        traversal[0..-2].each { |id| iota = iota.find(id) }
+        @leaf = iota.find_leaf(traversal[-1])
+        erb :show
+    rescue
+        return halt(404)
+    end
+end

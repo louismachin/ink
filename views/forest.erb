@@ -3,9 +3,13 @@
     <%= erb :_head %>
     <body>
         <%= erb :_trees, locals: { trees: $forest.trees } %>
-        <%= erb :_branches, locals: { branches: $forest.branches } %>
         <%= erb :_leaves, locals: { leaves: $forest.leaves } %>
-        <a onclick="hideAll(true)">Collapse</a> &bull; <a onclick="hideAll()">Expand</a>
+        <%= erb :_branches, locals: { branches: $forest.branches, uri: './forest' } %>
+        <div class="buttons">
+            <a onclick="hideAll(true)">Collapse</a>
+            &bull;
+            <a onclick="hideAll()">Expand</a>
+        </div>
     </body>
 
     <script>
