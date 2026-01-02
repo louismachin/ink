@@ -6,6 +6,7 @@
             <% path = defined?(@path) ? @path : '/' %>
             <p><%= path %></p>
             <button onclick="submitForm(event)">Save</button>
+            <button onclick="cancel()">Cancel</button>
         </div>
         <% raw = defined?(@raw) ? @raw.join("\n") : '' %>
         <textarea id="raw" rows="10"><%= raw %></textarea>
@@ -22,5 +23,7 @@
                 window.location.reload()
             })
         }
+
+        let cancel = () => window.location = '/'
     </script>
 </html>

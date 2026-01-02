@@ -21,7 +21,13 @@ class Branch < Leaf
     end
 
     def load_leaves
-        Dir[@dir + '/*.*'].each do |filepath|
+        Dir[@dir + '/*.leaf'].each do |filepath|
+            @leaves << Leaf.new(filepath)
+        end
+        Dir[@dir + '/*.branch'].each do |filepath|
+            @leaves << Leaf.new(filepath)
+        end
+        Dir[@dir + '/*.tree'].each do |filepath|
             @leaves << Leaf.new(filepath)
         end
     end
