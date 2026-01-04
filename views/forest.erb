@@ -2,43 +2,13 @@
 <html>
     <%= erb :_head %>
     <body>
-        <div class="buttons">
-            <a onclick="hideAll(true)">Collapse</a>
-            &bull;
-            <a onclick="hideAll()">Expand</a>
-            &bull;
-            <a onclick="reload()">Reload</a>
-        </div>
-        <li>
+        <%= erb :_buttons %>
+        <li class="add-button">
             <a href="./forest/edit?tree=1">
                 <b class="symbol">+</b>New Tree
             </a>
         </li>
         <%= erb :_trees, locals: { trees: $forest.trees + [$forest] } %>
-    <!--<%= erb :_branches, locals: { branches: $forest.branches, uri: './forest/forest' } %>-->
-    <!--<%= erb :_leaves, locals: { leaves: $forest.leaves } %>-->
     </body>
-
-    <script>
-        let toggles = document.getElementsByClassName('toggle')
-        for (let ix = 0; ix < toggles.length; ix++) {
-            toggles[ix].onclick = (e) => {
-                e.target.parentElement.classList.toggle('hidden')
-            }
-        }
-
-        let hideAll = (hide = false) => {
-            for (let ix = 0; ix < toggles.length; ix++) {
-                 if (hide) {
-                    toggles[ix].parentElement.classList.add('hidden')
-                } else {
-                    toggles[ix].parentElement.classList.remove('hidden')
-                }
-            }
-        }
-
-        let reload = () => window.location = '/reload'
-
-        hideAll(true)
-    </script>
+    <script src="/buttons.js"></script>
 </html

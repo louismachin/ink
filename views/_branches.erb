@@ -1,11 +1,11 @@
 <ul>
-    <li>
+    <li class="add-button">
         <% new_uri = uri.split('/')[0..-2].join('/') + '/edit?branch=1' %>
         <a href="<%= new_uri %>">
             <b class="symbol">+</b>New Branch
         </a>
     </li>
-    <li>
+    <li class="add-button">
         <% new_uri = uri.split('/')[0..-2].join('/') + '/edit' %>
         <a href="<%= new_uri %>">
             <b class="symbol">+</b>New Leaf
