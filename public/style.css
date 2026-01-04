@@ -30,7 +30,6 @@ p {
 }
 
 ul {
-    list-style: none;
     padding-left: 0;
     margin: 0;
 }
@@ -40,6 +39,7 @@ li ul {
 }
 
 li {
+    list-style: none;
     margin: 4px 0;
 }
 
