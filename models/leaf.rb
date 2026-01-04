@@ -15,7 +15,7 @@ class Leaf
         begin
             load_from_file(filepath)
         rescue => error
-            puts error
+        #   puts error
             self.reset
         end
     end
