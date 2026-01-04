@@ -1,6 +1,6 @@
 get '/api/list' do
     protect!
-    tags = params['tags'].split(',')
+    tags = params['tags'] ? params['tags'].split(',') : []
     uris = $forest.all_leaves
         .select { |leaf|
             tags.map { |tag| leaf.has_tag?(tag) }.all?
