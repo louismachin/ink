@@ -1,6 +1,10 @@
 helpers do
     $given_tokens = []
 
+    def cookie_name
+        return $config['cookie_name']
+    end
+
     def new_token
         token = Array.new(12) { [*'0'..'9', *'a'..'z', *'A'..'Z'].sample }.join
         $given_tokens << token
@@ -18,7 +22,7 @@ helpers do
         api_key = request.params['api_key']
         return true if api_key && is_valid_key?(api_key)
         # Check if cookie is assigned
-        cookie = request.cookies[$config['cookie_name']]
+        cookie = request.cookies[cookie_name]
         return cookie && $given_tokens.include?(cookie)
     end
 
@@ -36,7 +40,7 @@ post '/login' do
     attempt = data['attempt']
     if is_valid_key?(attempt)
         token = new_token
-        response.set_cookie($config['cookie_name'], value: token, path: '/', max_age: '3600')
+        response.set_cookie(cookie_name, value: token, path: '/', max_age: '3600')
         content_type :json
         status 200
         { success: true, token: token }.to_json
@@ -45,4 +49,11 @@ post '/login' do
         status 401
         { success: false, error: "Invalid password" }.to_json
     end
+end
+
+get '/logout' do
+  token = request.cookies[cookie_name]
+  $given_tokens.delete(token) if token
+  response.delete_cookie(cookie_name, path: '/')
+  redirect '/'
 end
