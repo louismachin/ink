@@ -110,7 +110,10 @@ get '/*.:ext' do
         traversal << leaf if leaf
         # Traverse and cast last part as a leaf
         iota = $forest
-        traversal[0..-2].each { |id| iota = iota.find(id) }
+        traversal[0..-2].each do |id|
+            puts "Finding [id=\"#{id}\"]..."
+            iota = iota.find(id)
+        end
         @leaf = iota.find_leaf(traversal[-1])
         erb :show
     rescue => error
