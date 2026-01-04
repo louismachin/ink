@@ -113,7 +113,8 @@ get '/*.:ext' do
         traversal[0..-2].each { |id| iota = iota.find(id) }
         @leaf = iota.find_leaf(traversal[-1])
         erb :show
-    rescue
+    rescue => error
+        puts error
         return halt(404)
     end
 end
