@@ -1,3 +1,18 @@
 <head>
     <link rel="stylesheet" href="/style.css"> 
+    <link rel="icon" type="image/png" href="/favicon_light.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" href="/favicon_dark.png"  media="(prefers-color-scheme: dark)">
+    <script>
+        if (document.querySelector && window.matchMedia) {
+            var favicon_dom = document.querySelector('link[rel="icon"]')
+            var mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+            
+            if (mediaQuery.addListener) {
+                mediaQuery.addListener(function(event) {
+                    var path = event.matches ? '/favicon_dark.png' : '/favicon_light.png'
+                    favicon_dom.setAttribute('href', path)
+                })
+            }
+        }
+    </script>
 </head>
