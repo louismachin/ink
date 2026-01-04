@@ -1,7 +1,6 @@
 ATTR_START = '---'
 ATTR_END = '---'
 ARRAY_ATTRS = ['tags']
-TAG_INDICATOR = '#'
 
 class Leaf
     attr_reader :id, :filepath
@@ -110,7 +109,6 @@ class Leaf
     end
 
     def has_tag?(tag)
-        tag = TAG_INDICATOR + tag unless tag[0] == TAG_INDICATOR
         return self.tags.include?(tag)
     end
 

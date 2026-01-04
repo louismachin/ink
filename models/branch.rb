@@ -32,6 +32,13 @@ class Branch < Leaf
         end
     end
 
+    def all_leaves
+        result = []
+        @branches.each { |branch| result += branch.all_leaves }
+        result += @leaves
+        return result
+    end
+
     def find(id)
         return find_branch(id) if id.end_with?('.branch')
         return find_leaf(id) if id.end_with?('.leaf')

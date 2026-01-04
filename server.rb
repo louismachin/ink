@@ -7,6 +7,7 @@ require_relative './models/tree'
 require_relative './models/forest'
 
 require './session.rb'
+require './api.rb'
 require './routes.rb'
 
 $forest = Forest.new

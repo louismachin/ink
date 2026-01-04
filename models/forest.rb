@@ -26,6 +26,14 @@ class Forest < Tree
         end
     end
 
+    def all_leaves
+        result = []
+        @trees.each { |tree| result += tree.all_leaves }
+        @branches.each { |branch| result += branch.all_leaves }
+        result += @leaves
+        return result
+    end
+
     def find(id)
         return find_tree(id) if id.end_with?('.tree')
         return find_branch(id) if id.end_with?('.branch')
