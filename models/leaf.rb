@@ -89,6 +89,7 @@ class Leaf
     end
 
     def is_tree?
+        return true if @filepath == './forest'
         return @filepath.end_with?('.tree')
     end
 

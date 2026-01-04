@@ -12,6 +12,8 @@ get '/*/edit' do
         # Get path as parts
         @path = params['splat'].first
         @path = '' if @path == 'forest'
+        @is_branch = params['branch'].to_i == 1
+        @is_tree = params['tree'].to_i == 1
         parts = @path.split('/')
         parts = [''] if parts == []
         edit = [
@@ -34,7 +36,7 @@ get '/*/edit' do
             leaf = iota.find_leaf(traversal[-1])
             @raw = leaf.raw
         else
-            @raw = ['---', 'title: untitled', '---', ]
+            @raw = ['---', "key: temp_key_#{rand(99999)}", 'title: untitled', '---', ]
         end
         erb :edit
     rescue => error
@@ -47,6 +49,8 @@ end
 post '/*/edit' do
     request.body.rewind
     data = request.body.read.split("\n")
+    is_branch = params['branch'].to_i == 1
+    is_tree = params['tree'].to_i == 1
     path = params['splat'].first.split("/")
     path = [''] if path == ['forest']
     edit = [
@@ -66,12 +70,22 @@ post '/*/edit' do
                 break if line == ATTR_END
             end
         end
-        filepath = File.join('forest', path, filename + '.leaf')
+        if is_branch
+            filepath = File.join('forest', path, filename, filename + '.branch')
+            dirpath = File.join('forest', path, filename)
+        elsif is_tree
+            filepath = File.join('forest', path, filename, filename + '.tree')
+            dirpath = File.join('forest', path, filename)
+        else
+            filepath = File.join('forest', path, filename + '.leaf')
+            dirpath = nil
+        end
     end
 
     puts "Path: #{filepath}"
     puts "Data: #{data.inspect}"
 
+    Dir.mkdir(dirpath) if dirpath
     File.write(filepath, data.join("\n"))
 
     $forest.reload

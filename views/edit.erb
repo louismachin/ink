@@ -15,9 +15,11 @@
         let submitForm = (e) => {
             e.preventDefault()
             const raw = document.getElementById('raw').value
-            fetch('/<%= path == '' ? 'forest' : path %>/edit', {
+            <% is_tree = defined?(@is_tree) && @is_tree ? 1 : 0 %>
+            <% is_branch = defined?(@is_branch) && @is_branch ? 1 : 0 %>
+            fetch('/<%= path == '' ? 'forest' : path %>/edit?tree=<%= is_tree %>&branch=<%= is_branch %>', {
                 method: 'POST',
-                headers: {'Content-Type': 'text/plain'}, 
+                headers: {'Content-Type': 'text/plain'},
                 body: raw,
             }).then(res => {
                 window.location.reload()

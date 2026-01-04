@@ -7,6 +7,10 @@ class Forest < Tree
         reload
     end
 
+    def title
+        return 'Root'
+    end
+
     def reload
         @trees = []
         @branches = []

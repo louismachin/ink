@@ -1,11 +1,17 @@
 <ul>
-    <% branches.each { |branch| %>
-        <%= erb :_branch, locals: { branch: branch } %>
-    <% } %>
+    <li>
+        <% new_uri = uri.split('/')[0..-2].join('/') + '/edit?branch=1' %>
+        <a href="<%= new_uri %>">
+            <b class="symbol">+</b>New Branch
+        </a>
+    </li>
     <li>
         <% new_uri = uri.split('/')[0..-2].join('/') + '/edit' %>
         <a href="<%= new_uri %>">
-            <b class="symbol">+</b>New
+            <b class="symbol">+</b>New Leaf
         </a>
     </li>
+    <% branches.each { |branch| %>
+        <%= erb :_branch, locals: { branch: branch } %>
+    <% } %>
 </ul>
