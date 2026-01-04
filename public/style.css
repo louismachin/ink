@@ -1,7 +1,16 @@
+@font-face {
+    font-family: 'Gramercy';
+    src: url('/GramercyVariable.woff2') format('woff2');
+}
+
 :root, pre {
-    font-family: serif;
+    font-family: 'Gramercy';
     font-size: 16px;
     color: #333;
+}
+
+body {
+    margin: 16px;
 }
 
 .hidden-self {
@@ -35,7 +44,7 @@ li {
 }
 
 a, .toggle {
-    cursor: pointer;
+    cursor: crosshair;
     text-decoration: none;
     color: inherit;
 }
